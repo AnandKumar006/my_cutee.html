@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For My Cuteeee 💖</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Comic Sans MS', cursive;
+}
+
+body{
+  background:radial-gradient(#1a0026,#000);
+  color:white;
+  height:100vh;
+  overflow:hidden;
+}
+
+/* FLOATING HEARTS */
+.heart{
+  position:fixed;
+  bottom:-20px;
+  font-size:20px;
+  animation:float 8s linear infinite;
+  opacity:0.8;
+}
+
+@keyframes float{
+  0%{transform:translateY(0); opacity:0;}
+  10%{opacity:1;}
+  100%{transform:translateY(-110vh); opacity:0;}
+}
+
+.page{
+  display:none;
+  height:100vh;
+  padding:40px;
+  text-align:center;
+  position:relative;
+  z-index:2;
+}
+
+.page.active{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+}
+
+h2{
+  margin-bottom:10px;
+}
+
+p{
+  opacity:0.85;
+}
+
+.heart-box{
+  margin:40px;
+}
+
+#heartBtn{
+  font-size:90px;
+  color:pink;
+  cursor:pointer;
+  user-select:none;
+}
+
+#progress{
+  height:6px;
+  width:0%;
+  background:pink;
+  border-radius:10px;
+  margin-top:15px;
+}
+
+.cards{
+  display:flex;
+  gap:15px;
+  margin-top:40px;
+}
+
+.card{
+  background:#ffd1dc;
+  color:#333;
+  padding:20px 25px;
+  border-radius:15px;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.card:hover{
+  transform:scale(1.05);
+}
+
+.ticket{
+  background:#1b1b3a;
+  padding:35px;
+  border-radius:25px;
+  box-shadow:0 0 30px gold;
+}
+
+.ticket h1{
+  color:gold;
+  letter-spacing:2px;
+}
+
+button{
+  margin-top:20px;
+  padding:12px 25px;
+  border:none;
+  border-radius:12px;
+  background:gold;
+  cursor:pointer;
+  font-size:16px;
+}
+
+.greeting{
+  background:#fff;
+  color:#333;
+  padding:40px;
+  border-radius:20px;
+  cursor:pointer;
+  font-size:28px;
+}
+
+.greeting span{
+  font-size:36px;
+  color:#ff6b6b;
+}
+
+.letter{
+  background:#fff;
+  color:#333;
+  padding:35px;
+  border-radius:20px;
+  max-width:480px;
+  animation:fade 1.5s ease;
+}
+
+@keyframes fade{
+  from{opacity:0; transform:translateY(20px);}
+  to{opacity:1; transform:translateY(0);}
+}
+</style>
+</head>
+
+<body>
+
+<!-- BACKGROUND MUSIC -->
+<audio id="music" loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_1b9d07f1a6.mp3" type="audio/mpeg">
+</audio>
+
+<!-- PAGE 1 -->
+<div class="page active" id="p1">
+  <h2>A little surprise for you</h2>
+  <p>Before this year begins, My Cuteeee 💖</p>
+
+  <div class="heart-box">
+    <div id="heartBtn">❤</div>
+    <div id="progress"></div>
+  </div>
+
+  <p>Tap and hold</p>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page" id="p2">
+  <h2>Something is waiting for you</h2>
+  <p>Move the little distractions aside</p>
+
+  <div class="cards">
+    <div class="card">Bad Days</div>
+    <div class="card">Work</div>
+    <div class="card">Overthinking</div>
+  </div>
+</div>
+
+<!-- PAGE 3 -->
+<div class="page" id="p3">
+  <div class="ticket">
+    <h1>GOLDEN TICKET</h1>
+    <p>Valid for every day ahead</p>
+    <h3>Unlimited Love & Smiles</h3>
+    <button onclick="next(3)">Claim Ticket</button>
+  </div>
+</div>
+
+<!-- PAGE 4 -->
+<div class="page" id="p4">
+  <h2>For my Cuteeee (Satakshi) 💗</h2>
+  <p>From your Softeee</p>
+
+  <div class="greeting" onclick="next(4)">
+    HAPPY NEW YEAR <br>
+    <span>2026</span>
+  </div>
+</div>
+
+<!-- PAGE 5 -->
+<div class="page" id="p5">
+  <div class="letter">
+    <p>
+      My Cuteeee,
+      <br><br>
+      I hope this year brings you calm mornings,
+      peaceful nights, and little moments that
+      make you smile without any reason.
+      <br><br>
+      No matter what this year holds for you,
+      I hope you always feel supported, valued,
+      and deeply loved.
+      <br><br>
+      From your Softeee 💖
+    </p>
+  </div>
+</div>
+
+<script>
+/* MUSIC START ON FIRST INTERACTION */
+const music=document.getElementById("music");
+document.body.addEventListener("click",()=>music.play(),{once:true});
+
+/* HEART HOLD */
+let prog=0,hold;
+const heart=document.getElementById("heartBtn");
+const bar=document.getElementById("progress");
+
+heart.addEventListener("mousedown",start);
+heart.addEventListener("touchstart",start);
+
+function start(){
+  hold=setInterval(()=>{
+    prog+=2;
+    bar.style.width=prog+"%";
+    if(prog>=100){
+      clearInterval(hold);
+      next(1);
+    }
+  },50);
+}
+
+document.addEventListener("mouseup",()=>clearInterval(hold));
+document.addEventListener("touchend",()=>clearInterval(hold));
+
+function next(n){
+  document.querySelector(".page.active").classList.remove("active");
+  document.getElementById("p"+(n+1)).classList.add("active");
+}
+
+/* REMOVE CARDS */
+document.querySelectorAll(".card").forEach(card=>{
+  card.onclick=()=>{
+    card.remove();
+    if(document.querySelectorAll(".card").length==0){
+      next(2);
+    }
+  };
+});
+
+/* FLOATING HEARTS */
+setInterval(()=>{
+  const h=document.createElement("div");
+  h.className="heart";
+  h.innerHTML="❤";
+  h.style.left=Math.random()*100+"vw";
+  h.style.fontSize=15+Math.random()*25+"px";
+  h.style.animationDuration=6+Math.random()*4+"s";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),10000);
+},300);
+</script>
+
+</body>
+</html>
